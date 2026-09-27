@@ -10,6 +10,14 @@ import { MODULE_9 } from './module9_persistence.js';
 import { MODULE_10 } from './module10_crud_forms.js';
 import { MODULE_11 } from './module11_rest_api.js';
 import { MODULE_12 } from './module12_notifications.js';
+import { MODULE_13 } from './module13_navigation.js';
+import { MODULE_14 } from './module14_i18n_links_card.js';
+import { MODULE_15 } from './module15_audio_exoplayer.js';
+import { MODULE_16 } from './module16_sensors_performance.js';
+import { MODULE_17 } from './module17_templates.js';
+import { MODULE_18 } from './module18_animations.js';
+import { MODULE_19 } from './module19_full_app.js';
+import { MODULE_20 } from './module20_collections.js';
 
 export const ALL_MODULES = [
   MODULE_1,
@@ -23,7 +31,15 @@ export const ALL_MODULES = [
   MODULE_9,
   MODULE_10,
   MODULE_11,
-  MODULE_12
+  MODULE_12,
+  MODULE_13,
+  MODULE_14,
+  MODULE_15,
+  MODULE_16,
+  MODULE_17,
+  MODULE_18,
+  MODULE_19,
+  MODULE_20
 ];
 
 export const TOTAL_LESSONS = ALL_MODULES.reduce((acc, m) => acc + m.lessons.length, 0);

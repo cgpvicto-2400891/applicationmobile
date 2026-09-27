@@ -742,6 +742,78 @@ override fun onCreate(savedInstanceState: Bundle?) {
           note: 'Nous verrons dans le Module 5 comment innerPadding empêche le texte d\'être caché sous l\'encoche de la caméra.'
         }
       ]
+    },
+    {
+      id: 'modifier-scroll',
+      title: 'Rendre un écran défilant : verticalScroll et horizontalScroll',
+      analogy: 'Un écran sans scroll, c\'est comme une affiche collée au mur : si le texte est trop long, il déborde sur le plancher et on ne le voit plus. Le modifier verticalScroll, c\'est comme imprimer ce texte sur un parchemin que l\'on peut dérouler à l\'infini.',
+      definition: 'Dans Compose, une Column (ou une Row) ne défile pas par défaut. Si son contenu dépasse l\'écran, il est tout simplement coupé. Pour permettre le défilement (Scroll View), on ajoute le modifier .verticalScroll(rememberScrollState()) pour une Column, ou .horizontalScroll(rememberScrollState()) pour une Row.',
+      codeExample: {
+        code: `@Composable
+fun EcranDefilant() {
+    // État mémorisé de la position du défilement
+    val scrollState = rememberScrollState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            // 🌟 C'est ce Modifier qui active le défilement vertical !
+            .verticalScroll(scrollState)
+            .padding(16.dp)
+    ) {
+        Text("Début de l'écran", fontSize = 24.sp)
+        
+        // Un très long texte qui dépasserait de l'écran sans le scroll
+        Text(
+            text = "Un très long paragraphe... ".repeat(50),
+            modifier = Modifier.padding(vertical = 20.dp)
+        )
+        
+        Text("Fin de l'écran", fontSize = 24.sp)
+    }
+}`,
+        lineByLine: [
+          {
+            line: 4,
+            code: 'val scrollState = rememberScrollState()',
+            explanation: 'Crée et mémorise l\'état du défilement (quelle position est actuellement visible). C\'est requis par les modifiers de scroll.'
+          },
+          {
+            line: 10,
+            code: '.verticalScroll(scrollState)',
+            explanation: 'Transforme la simple Column statique en une "Scroll View" verticale. Sans cette ligne, la fin du texte serait invisible et inaccessible.'
+          }
+        ]
+      },
+      visualMockup: {
+        type: 'scroll-preview',
+        title: 'Défilement activé',
+        content: 'Début de l\'écran\\nUn très long paragraphe...\\nUn très long paragraphe...\\n(L\'utilisateur peut glisser le doigt pour voir la suite)'
+      },
+      commonMistakes: [
+        {
+          mistake: 'Utiliser verticalScroll() pour une liste de 1000 éléments tirés d\'une base de données.',
+          fix: 'Pour de longues listes dynamiques, n\'utilisez JAMAIS verticalScroll(). Utilisez plutôt LazyColumn (voir Module 3), qui est optimisé pour ne pas saturer la mémoire.',
+          explanation: 'verticalScroll "dessine" tout le contenu d\'un coup, même ce qui est caché. Pour 50 paragraphes statiques c\'est parfait, pour 1000 c\'est un crash assuré.'
+        }
+      ],
+      quiz: {
+        question: 'Comment rendre une Column défilante pour afficher un long texte d\'explications ?',
+        options: [
+          'En remplaçant Column par ScrollColumn',
+          'En ajoutant l\'attribut scroll=true dans la Column',
+          'En ajoutant le modifier .verticalScroll(rememberScrollState())',
+          'En mettant le texte en plus petit'
+        ],
+        correctIndex: 2,
+        explanation: 'En Compose, le défilement est simplement un Modifier qu\'on applique à un conteneur standard comme Column ou Row.'
+      },
+      furtherReading: [
+        {
+          title: 'Notes du cours — Section 54.1 : Défilement (Scroll)',
+          url: '#'
+        }
+      ]
     }
   ]
 };

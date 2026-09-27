@@ -12,6 +12,22 @@ export default function App() {
   const [activeModuleId, setActiveModuleId] = useState(null);
   const [activeLessonId, setActiveLessonId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Initialiser selon la préférence système ou le localStorage
+    const saved = localStorage.getItem('cegep_theme');
+    if (saved) return saved === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  // Appliquer la classe dark sur <html>
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('cegep_theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   // Modals state
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -88,6 +104,8 @@ export default function App() {
         progressPercentage={progressPercentage}
         completedCount={completedCount}
         totalLessons={TOTAL_LESSONS}
+        isDarkMode={isDarkMode}
+        onToggleTheme={() => setIsDarkMode(!isDarkMode)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenGlossary={() => setIsGlossaryOpen(true)}
         onOpenDiagrams={() => setIsDiagramsOpen(true)}

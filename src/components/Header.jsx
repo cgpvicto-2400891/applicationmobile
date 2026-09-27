@@ -1,5 +1,6 @@
 import React from 'react';
-import { Search, BookMarked, GitFork, Menu, CheckCircle, Smartphone } from 'lucide-react';
+import { Search, BookMarked, GitFork, Menu, CheckCircle, Smartphone, Sun, Moon } from 'lucide-react';
+import { ALL_MODULES } from '../data/modulesData.js';
 
 export default function Header({
   activeModule,
@@ -7,6 +8,8 @@ export default function Header({
   progressPercentage,
   completedCount,
   totalLessons,
+  isDarkMode,
+  onToggleTheme,
   onOpenSearch,
   onOpenGlossary,
   onOpenDiagrams,
@@ -45,10 +48,10 @@ export default function Header({
           </button>
         </div>
 
-        {/* Center: Persistent Module Position ("Module 3/12") */}
+        {/* Center: Persistent Module Position */}
         <div className="hidden md:flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/60 shadow-xs">
           <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono">
-            {activeModule ? `Module ${activeModule.number}/12` : 'Sommaire'}
+            {activeModule ? `Module ${activeModule.number}/${ALL_MODULES.length}` : 'Sommaire'}
           </span>
           {activeModule && (
             <>
@@ -62,6 +65,14 @@ export default function Header({
 
         {/* Right Side: Tools & Actions */}
         <div className="flex items-center gap-2">
+          {/* Theme Toggle */}
+          <button
+            onClick={onToggleTheme}
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/70 transition-colors cursor-pointer border border-transparent hover:border-slate-300"
+            title={isDarkMode ? "Passer en mode clair" : "Passer en mode sombre"}
+          >
+            {isDarkMode ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-indigo-500" />}
+          </button>
           {/* Quick Search */}
           <button
             onClick={onOpenSearch}
@@ -117,7 +128,7 @@ export default function Header({
       {/* Persistent Mobile Module Banner */}
       <div className="md:hidden px-4 py-1.5 bg-slate-100 dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 text-xs flex justify-between items-center text-slate-700 dark:text-slate-300">
         <span className="font-bold text-indigo-600 dark:text-indigo-400">
-          {activeModule ? `Module ${activeModule.number}/12` : 'Sommaire'}
+          {activeModule ? `Module ${activeModule.number}/${ALL_MODULES.length}` : 'Sommaire'}
         </span>
         <span className="text-[11px] text-slate-500 truncate max-w-[220px]">
           {activeModule ? activeModule.title : 'Guide Android Cégep'}

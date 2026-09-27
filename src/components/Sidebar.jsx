@@ -42,7 +42,7 @@ export default function Sidebar({
         <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500">
             <Layers className="w-4 h-4 text-indigo-600" />
-            <span>Table des matières (12 Modules)</span>
+            <span>Table des matières ({ALL_MODULES.length} Modules)</span>
           </div>
 
           <button
